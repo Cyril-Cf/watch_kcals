@@ -1,0 +1,47 @@
+version: '3.6'
+
+services:
+
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=rust
+      - POSTGRES_DB=rust
+      - POSTGRES_PASSWORD=rust
+    ports:
+      - 5432:5432
+
+  front:
+    image: node:18
+    env_file:
+      - ./.env
+    volumes:
+      - ./front/.:/app
+    working_dir: /app
+    command: bash -c "yarn install && ./nodule_modules/.bin/quasar dev"
+    ports:
+      - "8002:8002"
+    depends_on:
+      - back
+    networks:
+      - watch_kcals
+
+  back:
+    build:
+      context: ./back/
+      dockerfile: ./Dockerfile
+    env_file:
+      - ./.env
+    volumes:
+      - ./back/.:/app
+    working_dir: /app
+    command: bash -c "cargo watch -x run"
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db
+    networks:
+      - watch_kcals
+
+networks:
+  watch_kcals:
