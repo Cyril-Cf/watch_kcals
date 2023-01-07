@@ -1,4 +1,4 @@
-use entity::user::{ActiveModel, Entity, Model, UpsertModel};
+use entity::ingredient::{ActiveModel, Entity, Model, UpsertModel};
 use sea_orm::{
     entity::ActiveValue, ActiveModelTrait, DatabaseConnection, DbErr, DeleteResult, EntityTrait,
     IntoActiveModel, ModelTrait,
@@ -17,10 +17,7 @@ pub async fn create(create_model: UpsertModel, conn: &DatabaseConnection) -> Res
     ActiveModel {
         id: ActiveValue::Set(Uuid::new_v4()),
         name: ActiveValue::Set(create_model.name),
-        is_woman: ActiveValue::Set(create_model.is_woman),
-        date_of_birth: ActiveValue::Set(create_model.date_of_birth),
-        height: ActiveValue::Set(create_model.height),
-        physical_activity_level: ActiveValue::Set(create_model.physical_activity_level),
+        ingredient_category_id: ActiveValue::Set(create_model.ingredient_category_id),
     }
     .insert(conn)
     .await

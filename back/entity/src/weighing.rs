@@ -9,9 +9,9 @@ pub struct Model {
     pub id: Uuid,
     pub date: Date,
     pub weight: f32,
-    pub body_fat_percentage: u32,
-    pub waist_circumference: u32,
-    pub waist_size: u32,
+    pub body_fat_percentage: Option<u32>,
+    pub waist_circumference: Option<u32>,
+    pub waist_size: Option<u32>,
     pub user_id: Uuid,
 }
 
@@ -34,10 +34,11 @@ impl Related<super::user::Entity> for Entity {
 impl ActiveModelBehavior for ActiveModel {}
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
-pub struct UpdateModel {
+pub struct UpsertModel {
     pub date: Date,
     pub weight: f32,
-    pub body_fat_percentage: u32,
-    pub waist_circumference: u32,
-    pub waist_size: u32,
+    pub body_fat_percentage: Option<u32>,
+    pub waist_circumference: Option<u32>,
+    pub waist_size: Option<u32>,
+    pub user_id: Uuid,
 }

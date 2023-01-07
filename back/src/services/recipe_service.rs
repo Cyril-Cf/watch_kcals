@@ -1,4 +1,4 @@
-use entity::user::{ActiveModel, Entity, Model, UpsertModel};
+use entity::recipe::{ActiveModel, Entity, Model, UpsertModel};
 use sea_orm::{
     entity::ActiveValue, ActiveModelTrait, DatabaseConnection, DbErr, DeleteResult, EntityTrait,
     IntoActiveModel, ModelTrait,
@@ -16,11 +16,10 @@ pub async fn find_all(conn: &DatabaseConnection) -> Result<Vec<Model>, DbErr> {
 pub async fn create(create_model: UpsertModel, conn: &DatabaseConnection) -> Result<Model, DbErr> {
     ActiveModel {
         id: ActiveValue::Set(Uuid::new_v4()),
+        difficulty_ranking: ActiveValue::Set(create_model.difficulty_ranking),
         name: ActiveValue::Set(create_model.name),
-        is_woman: ActiveValue::Set(create_model.is_woman),
-        date_of_birth: ActiveValue::Set(create_model.date_of_birth),
-        height: ActiveValue::Set(create_model.height),
-        physical_activity_level: ActiveValue::Set(create_model.physical_activity_level),
+        total_time: ActiveValue::Set(create_model.total_time),
+        recipe_category_id: ActiveValue::Set(create_model.recipe_category_id),
     }
     .insert(conn)
     .await

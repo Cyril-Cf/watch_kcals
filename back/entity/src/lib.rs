@@ -1,10 +1,13 @@
 pub mod ingredient;
+pub mod ingredient_category;
 pub mod ingredient_detail;
 pub mod meal_declaration;
 pub mod meal_declaration_ingredient;
 pub mod permission;
 pub mod recipe;
+pub mod recipe_category;
 pub mod recipe_ingredient;
+pub mod recipe_line;
 pub mod user;
 pub mod user_permission;
 pub mod weighing;

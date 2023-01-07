@@ -1,3 +1,11 @@
-// pub mod permission_service;
-// pub mod user_permission_service;
+pub mod ingredient_category_service;
+pub mod ingredient_detail_service;
+pub mod ingredient_service;
+pub mod meal_declaration_ingredient_service;
+pub mod meal_declaration_service;
+pub mod recipe_category_service;
+pub mod recipe_ingredient_service;
+pub mod recipe_line_service;
+pub mod recipe_service;
 pub mod user_service;
+pub mod weighing_service;

@@ -1,4 +1,4 @@
-use entity::user::{ActiveModel, Entity, Model, UpsertModel};
+use entity::ingredient_detail::{ActiveModel, Entity, Model, UpsertModel};
 use sea_orm::{
     entity::ActiveValue, ActiveModelTrait, DatabaseConnection, DbErr, DeleteResult, EntityTrait,
     IntoActiveModel, ModelTrait,
@@ -16,11 +16,10 @@ pub async fn find_all(conn: &DatabaseConnection) -> Result<Vec<Model>, DbErr> {
 pub async fn create(create_model: UpsertModel, conn: &DatabaseConnection) -> Result<Model, DbErr> {
     ActiveModel {
         id: ActiveValue::Set(Uuid::new_v4()),
-        name: ActiveValue::Set(create_model.name),
-        is_woman: ActiveValue::Set(create_model.is_woman),
-        date_of_birth: ActiveValue::Set(create_model.date_of_birth),
-        height: ActiveValue::Set(create_model.height),
-        physical_activity_level: ActiveValue::Set(create_model.physical_activity_level),
+        calories: ActiveValue::Set(create_model.calories),
+        ingredient_detail_type: ActiveValue::Set(create_model.ingredient_detail_type),
+        ingredient_id: ActiveValue::Set(create_model.ingredient_id),
+        proteins: ActiveValue::Set(create_model.proteins),
     }
     .insert(conn)
     .await
@@ -33,9 +32,9 @@ pub async fn update(
 ) -> Result<Option<Model>, DbErr> {
     match find_one(id, conn).await? {
         Some(user_in_db) => {
-            if user_from_request.name != user_in_db.name {
+            if user_from_request.calories != user_in_db.calories {
                 let mut active_model = user_in_db.into_active_model();
-                active_model.name = ActiveValue::Set(user_from_request.name.to_owned());
+                active_model.calories = ActiveValue::Set(user_from_request.calories.to_owned());
                 Ok(Some(active_model.update(conn).await?))
             } else {
                 Ok(None)

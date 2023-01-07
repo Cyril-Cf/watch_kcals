@@ -2,17 +2,22 @@ version: '3.6'
 
 services:
 
-  db:
-    image: postgres
+  postgresql:
+    image: postgres:12.13-alpine3.17
+    user: postgres
     environment:
-      - POSTGRES_USER=rust
-      - POSTGRES_DB=rust
-      - POSTGRES_PASSWORD=rust
+      - POSTGRES_USER=watchkcals
+      - POSTGRES_DB=watchkcals
+      - POSTGRES_PASSWORD=watchkcals
     ports:
       - 5432:5432
+    volumes:
+      - postgresql_core-data:/var/lib/postgresql/data
+    networks:
+      - watch_kcals
 
   front:
-    image: node:18
+    image: node:lts-slim
     env_file:
       - ./.env
     volumes:
@@ -39,9 +44,13 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - db
+      - postgresql
     networks:
       - watch_kcals
+
+volumes:
+  postgresql_core-data:
+
 
 networks:
   watch_kcals:

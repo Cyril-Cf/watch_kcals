@@ -1,4 +1,4 @@
-use entity::user::*;
+use entity::recipe_line::*;
 use sea_orm_migration::prelude::*;
 
 #[derive(DeriveMigrationName)]
@@ -13,14 +13,14 @@ impl MigrationTrait for Migration {
                     .table(Entity)
                     .if_not_exists()
                     .col(ColumnDef::new(Column::Id).uuid().not_null().primary_key())
-                    .col(ColumnDef::new(Column::Name).string().not_null())
-                    .col(ColumnDef::new(Column::IsWoman).boolean().not_null())
-                    .col(ColumnDef::new(Column::DateOfBirth).date().not_null())
-                    .col(ColumnDef::new(Column::Height).integer().not_null())
-                    .col(
-                        ColumnDef::new(Column::PhysicalActivityLevel)
-                            .integer()
-                            .not_null(),
+                    .col(ColumnDef::new(Column::Content).string().not_null())
+                    .col(ColumnDef::new(Column::Order).integer().not_null())
+                    .col(ColumnDef::new(Column::RecipeId).uuid().not_null())
+                    .foreign_key(
+                        ForeignKey::create()
+                            .name("recipes_lines_recipes")
+                            .from(Entity, Column::RecipeId)
+                            .to(entity::recipe::Entity, entity::recipe::Column::Id),
                     )
                     .to_owned(),
             )

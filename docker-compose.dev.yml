@@ -5,9 +5,9 @@ services:
   db:
     image: postgres
     environment:
-      - POSTGRES_USER=rust
-      - POSTGRES_DB=rust
-      - POSTGRES_PASSWORD=rust
+      - POSTGRES_USER=watch_kcals
+      - POSTGRES_DB=watch_kcals
+      - POSTGRES_PASSWORD=watch_kcals
     ports:
       - 5432:5432
 

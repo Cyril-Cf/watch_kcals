@@ -45,8 +45,9 @@ impl Related<super::ingredient::Entity> for Entity {
 impl ActiveModelBehavior for ActiveModel {}
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
-pub struct UpdateModel {
+pub struct UpsertModel {
     pub calories: u32,
     pub proteins: u32,
     pub ingredient_detail_type: IngredientDetailsType,
+    pub ingredient_id: Uuid,
 }

@@ -1,3 +1,11 @@
-// pub mod permission_controller;
+pub mod ingredient_category_controller;
+pub mod ingredient_controller;
+pub mod ingredient_detail_controller;
+pub mod meal_declaration_controller;
+pub mod meal_declaration_ingredient_controller;
+pub mod recipe_category_controller;
+pub mod recipe_controller;
+pub mod recipe_ingregient_controller;
+pub mod recipe_line_controller;
 pub mod user_controller;
-// pub mod user_permission_controller;
+pub mod weighing_controller;

@@ -8,6 +8,7 @@ pub struct Model {
     #[sea_orm(primary_key)]
     pub id: Uuid,
     pub name: String,
+    pub ingredient_category_id: Uuid,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
@@ -18,11 +19,23 @@ pub enum Relation {
     MealDeclaration,
     #[sea_orm(has_many = "super::recipe_ingredient::Entity")]
     Recipe,
+    #[sea_orm(
+        belongs_to = "super::ingredient_category::Entity",
+        from = "Column::IngredientCategoryId",
+        to = "super::ingredient_category::Column::Id"
+    )]
+    IngredientCategory,
 }
 
 impl Related<super::ingredient_detail::Entity> for Entity {
     fn to() -> RelationDef {
         Relation::IngredientDetails.def()
+    }
+}
+
+impl Related<super::ingredient_category::Entity> for Entity {
+    fn to() -> RelationDef {
+        Relation::IngredientCategory.def()
     }
 }
 
@@ -53,6 +66,7 @@ impl Related<super::recipe::Entity> for Entity {
 impl ActiveModelBehavior for ActiveModel {}
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
-pub struct UpdateModel {
+pub struct UpsertModel {
     pub name: String,
+    pub ingredient_category_id: Uuid,
 }

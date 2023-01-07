@@ -1,4 +1,4 @@
-use entity::user::*;
+use entity::ingredient_category::*;
 use sea_orm_migration::prelude::*;
 
 #[derive(DeriveMigrationName)]
@@ -14,14 +14,6 @@ impl MigrationTrait for Migration {
                     .if_not_exists()
                     .col(ColumnDef::new(Column::Id).uuid().not_null().primary_key())
                     .col(ColumnDef::new(Column::Name).string().not_null())
-                    .col(ColumnDef::new(Column::IsWoman).boolean().not_null())
-                    .col(ColumnDef::new(Column::DateOfBirth).date().not_null())
-                    .col(ColumnDef::new(Column::Height).integer().not_null())
-                    .col(
-                        ColumnDef::new(Column::PhysicalActivityLevel)
-                            .integer()
-                            .not_null(),
-                    )
                     .to_owned(),
             )
             .await

@@ -1,6 +1,7 @@
 use crate::services::user_service;
 use crate::AppState;
 use actix_web::{delete, get, post, put, web, HttpResponse, Responder};
+use entity::user::UpsertModel;
 use uuid::Uuid;
 
 #[delete("/users/{user_id}")]
@@ -23,7 +24,7 @@ async fn delete_user(app_state: web::Data<AppState>, user_id: web::Path<String>)
 async fn update_user(
     app_state: web::Data<AppState>,
     user_id: web::Path<String>,
-    user_from_request: web::Json<entity::user::UpdateModel>,
+    user_from_request: web::Json<UpsertModel>,
 ) -> impl Responder {
     match user_id.parse::<Uuid>() {
         Ok(user_id) => {
@@ -42,8 +43,11 @@ async fn update_user(
 }
 
 #[post("/users/{new_name}")]
-async fn add_user(app_state: web::Data<AppState>, new_name: web::Path<String>) -> impl Responder {
-    match user_service::create(new_name.to_string(), &app_state.conn).await {
+async fn add_user(
+    app_state: web::Data<AppState>,
+    create_model: web::Json<UpsertModel>,
+) -> impl Responder {
+    match user_service::create(create_model.into_inner(), &app_state.conn).await {
         Ok(user) => HttpResponse::Ok().json(user),
         Err(err) => HttpResponse::InternalServerError().body(err.to_string()),
     }

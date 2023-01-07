@@ -18,18 +18,26 @@ pub struct Model {
 pub enum Relation {
     #[sea_orm(has_many = "super::weighing::Entity")]
     Weighing,
+    #[sea_orm(has_many = "super::meal_declaration::Entity")]
+    MealDeclaration,
 }
 
 impl Related<super::weighing::Entity> for Entity {
     fn to() -> RelationDef {
-        super::weighing::Relation::User.def()
+        Relation::Weighing.def()
+    }
+}
+
+impl Related<super::meal_declaration::Entity> for Entity {
+    fn to() -> RelationDef {
+        Relation::MealDeclaration.def()
     }
 }
 
 impl ActiveModelBehavior for ActiveModel {}
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
-pub struct UpdateModel {
+pub struct UpsertModel {
     pub name: String,
     pub weight: f32,
     pub is_woman: bool,

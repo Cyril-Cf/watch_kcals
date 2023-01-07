@@ -9,7 +9,7 @@ pub struct Model {
     pub id: Uuid,
     pub date: Date,
     pub user_id: i32,
-    pub time_of_consumption: Time,
+    pub time_of_consumption: Option<Time>,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
@@ -47,7 +47,8 @@ impl Related<super::ingredient::Entity> for Entity {
 impl ActiveModelBehavior for ActiveModel {}
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
-pub struct UpdateModel {
+pub struct UpsertModel {
     pub date: Date,
-    pub time_of_consumption: Time,
+    pub time_of_consumption: Option<Time>,
+    pub user_id: i32,
 }
