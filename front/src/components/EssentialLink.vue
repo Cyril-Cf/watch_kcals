@@ -1,14 +1,6 @@
 <template>
-  <q-item
-    clickable
-    tag="a"
-    target="_blank"
-    :href="link"
-  >
-    <q-item-section
-      v-if="icon"
-      avatar
-    >
+  <q-item clickable tag="a" target="_blank" :href="link">
+    <q-item-section v-if="icon" avatar>
       <q-icon :name="icon" />
     </q-item-section>
 
@@ -20,9 +12,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { useIngredientCategoryStore } from 'src/store/modules/ingredientCategory'
 
-export default defineComponent({
+export default {
   name: 'EssentialLink',
   props: {
     title: {
@@ -44,6 +36,14 @@ export default defineComponent({
       type: String,
       default: ''
     }
+  },
+  setup() {
+    const store = useIngredientCategoryStore()
+    store.fetchAll()
+    console.log(store.allIngredientCategories)
+    return {
+
+    }
   }
-});
+};
 </script>

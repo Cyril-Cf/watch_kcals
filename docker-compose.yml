@@ -18,12 +18,10 @@ services:
 
   front:
     image: node:lts-slim
-    env_file:
-      - ./.env
     volumes:
-      - ./front/.:/app
+      - ./front:/app
     working_dir: /app
-    command: bash -c "yarn install && yarn global add @quasar/cli && quasar dev"
+    command: bash -c "yarn install && yarn global add @quasar/cli && quasar dev -p 8080"
     ports:
       - "8080:8080"
     depends_on:
@@ -38,7 +36,7 @@ services:
     env_file:
       - ./.env
     volumes:
-      - ./back/.:/app
+      - ./back:/app
     working_dir: /app
     command: bash -c "cargo watch -x run"
     ports:
@@ -50,7 +48,7 @@ services:
 
 volumes:
   postgresql_core-data:
-
+    driver: local
 
 networks:
-  watch_kcals:
+  watch_kcals: {}
