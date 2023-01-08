@@ -8,8 +8,8 @@ pub struct Model {
     #[sea_orm(primary_key)]
     pub id: Uuid,
     pub name: String,
-    pub difficulty_ranking: u32,
-    pub total_time: u32,
+    pub difficulty_ranking: i32,
+    pub total_time: i32,
     pub recipe_category_id: Uuid,
 }
 
@@ -54,7 +54,7 @@ impl ActiveModelBehavior for ActiveModel {}
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct UpsertModel {
     pub name: String,
-    pub difficulty_ranking: u32,
-    pub total_time: u32,
+    pub difficulty_ranking: i32,
+    pub total_time: i32,
     pub recipe_category_id: Uuid,
 }

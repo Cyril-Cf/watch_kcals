@@ -6,9 +6,9 @@ use uuid::Uuid;
 #[sea_orm(
     rs_type = "String",
     db_type = "Enum",
-    enum_name = "IngredientDetailsType"
+    enum_name = "IngredientDetailsTypeEnum"
 )]
-pub enum IngredientDetailsType {
+pub enum IngredientDetailsTypeEnum {
     #[sea_orm(string_value = "ByGrams")]
     ByGrams,
     #[sea_orm(string_value = "ByPiece")]
@@ -20,9 +20,9 @@ pub enum IngredientDetailsType {
 pub struct Model {
     #[sea_orm(primary_key)]
     pub id: Uuid,
-    pub calories: u32,
-    pub proteins: u32,
-    pub ingredient_detail_type: IngredientDetailsType,
+    pub calories: i32,
+    pub proteins: i32,
+    pub ingredient_detail_type: IngredientDetailsTypeEnum,
     pub ingredient_id: Uuid,
 }
 
@@ -46,8 +46,8 @@ impl ActiveModelBehavior for ActiveModel {}
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct UpsertModel {
-    pub calories: u32,
-    pub proteins: u32,
-    pub ingredient_detail_type: IngredientDetailsType,
+    pub calories: i32,
+    pub proteins: i32,
+    pub ingredient_detail_type: IngredientDetailsTypeEnum,
     pub ingredient_id: Uuid,
 }

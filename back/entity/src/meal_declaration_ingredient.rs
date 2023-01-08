@@ -10,7 +10,7 @@ pub struct Model {
     #[sea_orm(primary_key)]
     pub ingredient_id: Uuid,
     pub ingredient_detail_id: Uuid,
-    pub quantity: u32,
+    pub quantity: i32,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
@@ -60,5 +60,5 @@ pub struct UpsertModel {
     pub meal_declaration_id: Uuid,
     pub ingredient_id: Uuid,
     pub ingredient_detail_id: Uuid,
-    pub quantity: u32,
+    pub quantity: i32,
 }

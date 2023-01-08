@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
 #[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel, Serialize, Deserialize)]
-#[sea_orm(table_name = "ingredient_categories")]
+#[sea_orm(table_name = "recipe_categories")]
 pub struct Model {
     #[sea_orm(primary_key)]
     pub id: Uuid,

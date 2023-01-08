@@ -3,12 +3,12 @@ use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
 #[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel, Serialize, Deserialize)]
-#[sea_orm(table_name = "ingredient_categories")]
+#[sea_orm(table_name = "recipe_lines")]
 pub struct Model {
     #[sea_orm(primary_key)]
     pub id: Uuid,
     pub content: String,
-    pub order: u32,
+    pub order: i32,
     pub recipe_id: Uuid,
 }
 
@@ -33,6 +33,6 @@ impl ActiveModelBehavior for ActiveModel {}
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct UpsertModel {
     pub content: String,
-    pub order: u32,
+    pub order: i32,
     pub recipe_id: Uuid,
 }

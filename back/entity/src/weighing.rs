@@ -9,9 +9,9 @@ pub struct Model {
     pub id: Uuid,
     pub date: Date,
     pub weight: f32,
-    pub body_fat_percentage: Option<u32>,
-    pub waist_circumference: Option<u32>,
-    pub waist_size: Option<u32>,
+    pub body_fat_percentage: Option<i32>,
+    pub waist_circumference: Option<i32>,
+    pub waist_size: Option<i32>,
     pub user_id: Uuid,
 }
 
@@ -37,8 +37,8 @@ impl ActiveModelBehavior for ActiveModel {}
 pub struct UpsertModel {
     pub date: Date,
     pub weight: f32,
-    pub body_fat_percentage: Option<u32>,
-    pub waist_circumference: Option<u32>,
-    pub waist_size: Option<u32>,
+    pub body_fat_percentage: Option<i32>,
+    pub waist_circumference: Option<i32>,
+    pub waist_size: Option<i32>,
     pub user_id: Uuid,
 }

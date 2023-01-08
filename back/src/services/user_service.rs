@@ -17,7 +17,7 @@ pub async fn create(create_model: UpsertModel, conn: &DatabaseConnection) -> Res
     ActiveModel {
         id: ActiveValue::Set(Uuid::new_v4()),
         name: ActiveValue::Set(create_model.name),
-        is_woman: ActiveValue::Set(create_model.is_woman),
+        gender: ActiveValue::Set(create_model.gender),
         date_of_birth: ActiveValue::Set(create_model.date_of_birth),
         height: ActiveValue::Set(create_model.height),
         physical_activity_level: ActiveValue::Set(create_model.physical_activity_level),
@@ -33,13 +33,13 @@ pub async fn update(
 ) -> Result<Option<Model>, DbErr> {
     match find_one(id, conn).await? {
         Some(user_in_db) => {
-            if user_from_request.name != user_in_db.name {
-                let mut active_model = user_in_db.into_active_model();
-                active_model.name = ActiveValue::Set(user_from_request.name.to_owned());
-                Ok(Some(active_model.update(conn).await?))
-            } else {
-                Ok(None)
-            }
+            let mut active_model = user_in_db.into_active_model();
+            active_model.name = ActiveValue::Set(user_from_request.name.to_owned());
+            active_model.gender = ActiveValue::Set(user_from_request.gender.to_owned());
+            active_model.date_of_birth = ActiveValue::Set(user_from_request.date_of_birth.to_owned());
+            active_model.height = ActiveValue::Set(user_from_request.height.to_owned());
+            active_model.physical_activity_level = ActiveValue::Set(user_from_request.physical_activity_level.to_owned());
+            Ok(Some(active_model.update(conn).await?))
         }
         None => Ok(None),
     }

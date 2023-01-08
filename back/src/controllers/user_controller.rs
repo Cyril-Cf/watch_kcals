@@ -42,7 +42,7 @@ async fn update_user(
     }
 }
 
-#[post("/users/{new_name}")]
+#[post("/users")]
 async fn add_user(
     app_state: web::Data<AppState>,
     create_model: web::Json<UpsertModel>,
