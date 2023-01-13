@@ -47,6 +47,7 @@ async fn main() -> std::io::Result<()> {
     let conn = sea_orm::Database::connect(opt).await.unwrap();
     println!("Connexion successful!");
     println!("Applying migrations...");
+    // Migrator::down(&conn, None).await.unwrap();
     Migrator::up(&conn, None).await.unwrap();
     println!("Applying migrations... successful!");
     let state = AppState { conn };

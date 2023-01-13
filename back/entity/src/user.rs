@@ -2,16 +2,29 @@ use sea_orm::entity::prelude::*;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, EnumIter, DeriveActiveEnum)]
+#[sea_orm(
+    rs_type = "String",
+    db_type = "Enum",
+    enum_name = "GenderTypeEnum"
+)]
+pub enum GenderTypeEnum {
+    #[sea_orm(string_value = "Male")]
+    Male,
+    #[sea_orm(string_value = "Female")]
+    Female,
+}
+
 #[derive(Clone, Debug, DeriveEntityModel, Serialize, Deserialize)]
 #[sea_orm(table_name = "users")]
 pub struct Model {
     #[sea_orm(primary_key)]
     pub id: Uuid,
     pub name: String,
-    pub is_woman: bool,
+    pub gender: GenderTypeEnum,
     pub date_of_birth: Date,
-    pub height: u32,
-    pub physical_activity_level: u32,
+    pub height: i32,
+    pub physical_activity_level: i32,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
@@ -39,9 +52,8 @@ impl ActiveModelBehavior for ActiveModel {}
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct UpsertModel {
     pub name: String,
-    pub weight: f32,
-    pub is_woman: bool,
+    pub gender: GenderTypeEnum,
     pub date_of_birth: Date,
-    pub height: u32,
-    pub physical_activity_level: u32,
+    pub height: i32,
+    pub physical_activity_level: i32,
 }

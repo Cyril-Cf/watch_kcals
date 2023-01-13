@@ -34,14 +34,16 @@ pub async fn update(
 ) -> Result<Option<Model>, DbErr> {
     match find_one(id, conn).await? {
         Some(user_in_db) => {
-            if user_from_request.body_fat_percentage != user_in_db.body_fat_percentage {
-                let mut active_model = user_in_db.into_active_model();
-                active_model.body_fat_percentage =
-                    ActiveValue::Set(user_from_request.body_fat_percentage.to_owned());
-                Ok(Some(active_model.update(conn).await?))
-            } else {
-                Ok(None)
-            }
+            let mut active_model = user_in_db.into_active_model();
+            active_model.body_fat_percentage =
+                ActiveValue::Set(user_from_request.body_fat_percentage.to_owned());
+            active_model.date = ActiveValue::Set(user_from_request.date.to_owned());
+            active_model.weight = ActiveValue::Set(user_from_request.weight.to_owned());
+            active_model.waist_circumference =
+                ActiveValue::Set(user_from_request.waist_circumference.to_owned());
+            active_model.waist_size = ActiveValue::Set(user_from_request.waist_size.to_owned());
+            active_model.user_id = ActiveValue::Set(user_from_request.user_id.to_owned());
+            Ok(Some(active_model.update(conn).await?))
         }
         None => Ok(None),
     }
