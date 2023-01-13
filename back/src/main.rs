@@ -1,3 +1,14 @@
+// To use when deploying the application with shuttle
+
+// use actix_cors::Cors;
+// use actix_web::middleware::Logger;
+// use actix_web::{web, web::ServiceConfig};
+// use migration::{Migrator, MigratorTrait};
+// use sea_orm::DatabaseConnection;
+// use shuttle_service::ShuttleActixWeb;
+// use sqlx::PgPool;
+
+// To run during development inside the container
 use actix_cors::Cors;
 use actix_web::{web, App, HttpServer};
 use migration::{Migrator, MigratorTrait};
@@ -13,6 +24,8 @@ mod services;
 struct AppState {
     conn: DatabaseConnection,
 }
+
+// To run during development inside the container
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -48,6 +61,27 @@ async fn main() -> std::io::Result<()> {
     .run()
     .await
 }
+
+// To use when deploying the application with shuttle
+
+// #[shuttle_service::main]
+// async fn actix_web(
+//     #[shuttle_shared_db::Postgres] pool: PgPool,
+// ) -> ShuttleActixWeb<impl FnOnce(&mut ServiceConfig) + Sync + Send + Clone + 'static> {
+//     let conn: sea_orm::DatabaseConnection =
+//         sea_orm::SqlxPostgresConnector::from_sqlx_postgres_pool(pool);
+//     Migrator::up(&conn, None).await.unwrap();
+//     let state = AppState { conn };
+//     Ok(move |cfg: &mut ServiceConfig| {
+//         cfg.service(
+//             web::scope("/api")
+//                 .wrap(Cors::permissive())
+//                 .wrap(Logger::default())
+//                 .app_data(web::Data::new(state.clone()))
+//                 .configure(init),
+//         );
+//     })
+// }
 
 pub fn init(cfg: &mut web::ServiceConfig) {
     // ingredient categories
