@@ -1,3 +1,5 @@
+use entity::ingredient::Entity as Ingredient;
+use entity::ingredient::Model as IngredientModel;
 use entity::ingredient_category::{ActiveModel, Entity, Model, UpsertModel};
 use sea_orm::{
     entity::ActiveValue, ActiveModelTrait, DatabaseConnection, DbErr, DeleteResult, EntityTrait,
@@ -9,8 +11,10 @@ pub async fn find_one(id: Uuid, conn: &DatabaseConnection) -> Result<Option<Mode
     Entity::find_by_id(id).one(conn).await
 }
 
-pub async fn find_all(conn: &DatabaseConnection) -> Result<Vec<Model>, DbErr> {
-    Entity::find().all(conn).await
+pub async fn find_all(
+    conn: &DatabaseConnection,
+) -> Result<Vec<(Model, Option<IngredientModel>)>, DbErr> {
+    Entity::find().find_also_related(Ingredient).all(conn).await
 }
 
 pub async fn create(create_model: UpsertModel, conn: &DatabaseConnection) -> Result<Model, DbErr> {

@@ -52,8 +52,8 @@
     </q-card-section>
     <q-card-actions>
       <div class="row flex justify-center items-center">
-        <q-btn flat unelevated color="primary" @click="upsert">
-          {{ btnLabel }}
+        <q-btn round color="primary" icon="save" @click="upsert">
+          <q-tooltip>{{ btnLabel }}</q-tooltip>
         </q-btn>
       </div>
     </q-card-actions>
@@ -62,7 +62,7 @@
 
 <script>
 import { useI18n } from 'vue-i18n';
-import { watch, ref } from 'vue';
+import { ref } from 'vue';
 import { useWeighingStore } from 'src/store/modules/weighing';
 import { useQuasar } from 'quasar';
 import cloneDeep from 'lodash/cloneDeep';

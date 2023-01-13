@@ -31,9 +31,24 @@
           <q-input
             v-model="internal.physical_activity_level"
             type="number"
+            min="1"
+            max="5"
+            step="1"
             borderless
             :label="t('user.physical_activity_level')"
-          />
+          >
+            <q-tooltip>
+              {{ t('user.physical_activity_level_explanation1') }}
+              <br />
+              {{ t('user.physical_activity_level_explanation2') }}
+              <br />
+              {{ t('user.physical_activity_level_explanation3') }}
+              <br />
+              {{ t('user.physical_activity_level_explanation4') }}
+              <br />
+              {{ t('user.physical_activity_level_explanation5') }}
+            </q-tooltip>
+          </q-input>
         </div>
 
         <div class="col-3">
@@ -48,8 +63,8 @@
     </q-card-section>
     <q-card-actions>
       <div class="row flex justify-center items-center">
-        <q-btn flat unelevated color="primary" @click="upsertUser">
-          {{ btnLabel }}
+        <q-btn round color="primary" icon="save" @click="upsertUser">
+          <q-tooltip>{{ btnLabel }}</q-tooltip>
         </q-btn>
       </div>
     </q-card-actions>
@@ -97,6 +112,18 @@ export default {
       }
     );
 
+    watch(
+      () => internal.value.physical_activity_level,
+      (newVal) => {
+        if (newVal < 1) {
+          internal.value.physical_activity_level = 1;
+        }
+        if (newVal > 5) {
+          internal.value.physical_activity_level = 5;
+        }
+      }
+    );
+
     const genderOptions = [
       {
         label: t('user.genders.male'),
@@ -134,3 +161,8 @@ export default {
   },
 };
 </script>
+<style scoped lang="scss">
+.text-block {
+  white-space: pre-line;
+}
+</style>

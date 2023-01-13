@@ -22,7 +22,7 @@ import { useWeighingStore } from 'src/store/modules/weighing';
 export default {
   name: 'WeighingList',
   setup(props, { emit }) {
-    const internal = ref({});
+    const internal = ref([]);
     const { t } = useI18n();
     const weighingStore = useWeighingStore();
 

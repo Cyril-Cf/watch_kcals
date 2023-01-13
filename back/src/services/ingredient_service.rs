@@ -30,13 +30,11 @@ pub async fn update(
 ) -> Result<Option<Model>, DbErr> {
     match find_one(id, conn).await? {
         Some(user_in_db) => {
-            if user_from_request.name != user_in_db.name {
-                let mut active_model = user_in_db.into_active_model();
-                active_model.name = ActiveValue::Set(user_from_request.name.to_owned());
-                Ok(Some(active_model.update(conn).await?))
-            } else {
-                Ok(None)
-            }
+            let mut active_model = user_in_db.into_active_model();
+            active_model.name = ActiveValue::Set(user_from_request.name.to_owned());
+            active_model.ingredient_category_id =
+                ActiveValue::Set(user_from_request.ingredient_category_id.to_owned());
+            Ok(Some(active_model.update(conn).await?))
         }
         None => Ok(None),
     }

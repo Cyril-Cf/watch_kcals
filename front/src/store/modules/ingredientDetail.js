@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
 import { api } from 'boot/axios';
 
-const API_RESSOURCE = '/ingredients';
+const API_RESSOURCE = '/ingredient_details';
 
-export const useIngredientStore = defineStore({
-  id: 'ingredientStore',
+export const useIngredientDetailStore = defineStore({
+  id: 'ingredientDetailStore',
   state: () => ({
     loading: false,
     all: [],
@@ -14,10 +14,11 @@ export const useIngredientStore = defineStore({
     changeSelected(object) {
       this.selected = object;
     },
-    async fetchAll() {
+    async fetchAllForOneIngredient(ingredientId) {
       try {
         this.loading = true;
-        this.all = (await api.get(`${API_RESSOURCE}`)).data;
+        this.all = (await api.get(`${API_RESSOURCE}/ingredients/${ingredientId}`)).data;
+        this.all.sort((a, b) => (a.ingredient_detail_type < b.ingredient_detail_type ? -1 : 1))
       } catch (err) {
         console.log(err);
       } finally {
@@ -44,11 +45,11 @@ export const useIngredientStore = defineStore({
         this.loading = false;
       }
     },
-    async update(req) {
+    async update(req, id) {
       try {
         this.loading = true;
         this.selected = (
-          await api.put(`${API_RESSOURCE}/${this.selected.id}`, req)
+          await api.put(`${API_RESSOURCE}/${id}`, req)
         ).data;
       } catch (err) {
         // console.log(err);

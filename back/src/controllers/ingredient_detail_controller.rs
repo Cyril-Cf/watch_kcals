@@ -88,3 +88,24 @@ async fn find_all_ingredient_details(app_state: web::Data<AppState>) -> impl Res
         Err(err) => HttpResponse::InternalServerError().body(err.to_string()),
     }
 }
+
+#[get("/ingredient_details/ingredients/{ingredient_detail_id}")]
+async fn find_all_for_ingredient(
+    app_state: web::Data<AppState>,
+    ingredient_detail_id: web::Path<String>,
+) -> impl Responder {
+    match ingredient_detail_id.parse::<Uuid>() {
+        Ok(ingredient_detail_id) => {
+            match ingredient_detail_service::find_all_for_ingredient(
+                &app_state.conn,
+                ingredient_detail_id,
+            )
+            .await
+            {
+                Ok(ingredient_details) => HttpResponse::Ok().json(ingredient_details),
+                Err(err) => HttpResponse::InternalServerError().body(err.to_string()),
+            }
+        }
+        Err(err) => HttpResponse::NotFound().body(err.to_string()),
+    }
+}

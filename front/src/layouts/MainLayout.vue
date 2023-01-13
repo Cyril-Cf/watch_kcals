@@ -11,7 +11,16 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> </q-toolbar-title>
+        <q-toolbar-title>
+          <q-btn
+            round
+            color="secondary"
+            :icon="$q.dark.isActive ? 'brightness_5' : 'brightness_7'"
+            @click="$q.dark.toggle()"
+          >
+            <q-tooltip>{{ t('menu.darkMode') }}</q-tooltip>
+          </q-btn>
+        </q-toolbar-title>
       </q-toolbar>
     </q-header>
 
@@ -66,9 +75,12 @@
 
 <script>
 import { ref, onBeforeMount } from 'vue';
+import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 import { useUserStore } from 'src/store/modules/user';
 import { useWeighingStore } from 'src/store/modules/weighing';
+import { useIngredientStore } from 'src/store/modules/ingredient';
+import { useIngredientCategoryStore } from 'src/store/modules/ingredientCategory';
 
 export default {
   name: 'MainLayout',
@@ -78,24 +90,54 @@ export default {
 
     const menuList = [
       {
-        icon: 'description',
+        icon: 'dashboard',
+        label: t('menu.dashboard'),
+        separator: true,
+        routeName: 'page-user-details',
+      },
+      {
+        icon: 'account_circle',
         label: t('menu.user'),
         separator: true,
         routeName: 'page-user-details',
       },
       {
-        icon: 'description',
+        icon: 'monitor_weight',
+        label: t('menu.weighings'),
+        separator: true,
+        routeName: 'page-user-details',
+      },
+      {
+        icon: 'restaurant',
+        label: t('menu.mealDeclarations'),
+        separator: true,
+        routeName: 'page-ingredients',
+      },
+      {
+        icon: 'kitchen',
         label: t('menu.ingredients'),
+        separator: true,
+        routeName: 'page-ingredients',
+      },
+      {
+        icon: 'dinner_dining',
+        label: t('menu.recipes'),
         separator: true,
         routeName: 'page-ingredients',
       },
     ];
 
     onBeforeMount(async () => {
+      const $q = useQuasar();
+      $q.dark.set(true);
       const userStore = useUserStore();
       await userStore.fetchUser();
       const weighingStore = useWeighingStore();
       await weighingStore.fetchWeighings();
+      const ingredientStore = useIngredientStore();
+      await ingredientStore.fetchAll();
+      const ingredientCategoryStore = useIngredientCategoryStore();
+      await ingredientCategoryStore.fetchAll();
     });
 
     const userStore = useUserStore();

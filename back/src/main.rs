@@ -61,6 +61,7 @@ pub fn init(cfg: &mut web::ServiceConfig) {
     cfg.service(controllers::ingredient_detail_controller::add_ingredient_detail);
     cfg.service(controllers::ingredient_detail_controller::find_one_ingredient_detail);
     cfg.service(controllers::ingredient_detail_controller::find_all_ingredient_details);
+    cfg.service(controllers::ingredient_detail_controller::find_all_for_ingredient);
     cfg.service(controllers::ingredient_detail_controller::update_ingredient_detail);
     cfg.service(controllers::ingredient_detail_controller::delete_ingredient_detail);
 
