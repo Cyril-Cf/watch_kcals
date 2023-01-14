@@ -1,4 +1,7 @@
 export default {
+  generic: {
+    filter: 'Filtrer'
+  },
   user: {
     name: 'Nom',
     date_of_birth: 'Date de naissance',
@@ -33,6 +36,10 @@ export default {
     waist_size: 'Tour de ceinture',
   },
   menu: {
+    lang: {
+      en: 'Anglais',
+      fr: 'Francais',
+    },
     darkMode: 'Activer/désativer le mode sombre',
     dashboard: 'Dashboard',
     user: 'Mon compte',
@@ -46,6 +53,7 @@ export default {
         ingredientCategories: "Catégories d'ingredients",
       },
     },
+    slogan: 'Reprenez le controle de vos envies',
   },
   ingredient: {
     newIngredient: 'Ajouter un nouvel ingrédient',

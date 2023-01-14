@@ -11,7 +11,7 @@
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-
+const path = require('path');
 const { configure } = require('quasar/wrappers');
 
 module.exports = configure(function (ctx) {
@@ -46,7 +46,7 @@ module.exports = configure(function (ctx) {
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
       // 'ionicons-v4',
-      // 'mdi-v5',
+      'mdi-v5',
       // 'fontawesome-v6',
       // 'eva-icons',
       // 'themify',
@@ -59,7 +59,8 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-build
     build: {
-      vueRouterMode: 'history', // available values: 'hash', 'history'
+      publicPath: process.env.ROUTER_BASE || '/',
+      vueRouterMode: process.env.ROUTER_MODE || 'history',
       env: {
         API: 'http://localhost:3000/api/'
       },
@@ -88,21 +89,23 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-devServer
     devServer: {
-      server: {
-        type: 'http'
-      },
+      static: path.join(__dirname, 'public'),
+      https: false,
       port: 8080,
-      open: true // opens browser window automatically
+      open: false // opens browser window automatically
     },
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-framework
     framework: {
       config: {
-        notify: {
-
-        }
+        dark: true,
+        sitename: 'Watch my Kcals',
+        logo: 'img:../../images/yawik_logo-mobile.svg',
       },
+      lang: 'fr', // Quasar language pack
+      iconSet: 'mdi-v5', // Quasar icon set
 
+      importStrategy: 'auto',
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
 
@@ -152,7 +155,7 @@ module.exports = configure(function (ctx) {
       // chainWebpackCustomSW (/* chain */) {},
 
       manifest: {
-        name: `Watch kcals`,
+        name: `Watch my kcals`,
         short_name: `Watch kcals`,
         description: ``,
         display: 'standalone',

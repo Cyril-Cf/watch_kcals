@@ -1,14 +1,31 @@
 <template>
   <div>
     <q-table
+      grid
+      :title="$t('menu.tabs.ingredient.ingredients')"
+      row-key="name"
+      :filter="filter"
+      hide-header
       :rows="internal"
       :dense="$q.screen.sm"
-      :grid="$q.screen.xs"
       :columns="columns"
       class="shadow-0"
       style="table-layout: fixed"
       @row-click="onRowClicked"
     >
+      <template v-slot:top-right>
+        <q-input
+          borderless
+          dense
+          debounce="300"
+          v-model="filter"
+          :placeholder="$t('generic.filter')"
+        >
+          <template v-slot:append>
+            <q-icon name="search" />
+          </template>
+        </q-input>
+      </template>
     </q-table>
   </div>
 </template>
@@ -49,7 +66,7 @@ export default {
     const columns = [
       {
         name: 'name',
-        label: t('ingredient.name'),
+        // label: t('ingredient.name'),
         align: 'left',
         field: (row) => row.name,
         style: 'width: 20px',
@@ -67,6 +84,7 @@ export default {
       columns,
       internal,
       onRowClicked,
+      filter: ref(''),
     };
   },
 };
