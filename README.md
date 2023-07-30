@@ -12,4 +12,4 @@ or
 > make init
 
 ### Warning
-- Non-production-ready
+- Non-production-ready, at your own risks!
